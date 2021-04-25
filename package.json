@@ -7,8 +7,12 @@
     "serve": "vite preview"
   },
   "dependencies": {
+    "immer": "^9.0.1",
     "react": "^17.0.0",
-    "react-dom": "^17.0.0"
+    "react-cookie": "^4.0.3",
+    "react-dom": "^17.0.0",
+    "use-immer": "^0.5.1",
+    "zustand": "^3.4.1"
   },
   "devDependencies": {
     "@tailwindcss/jit": "^0.1.18",

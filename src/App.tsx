@@ -1,18 +1,28 @@
-import React, { useEffect, useState } from "react";
+import React, { Suspense } from "react";
 import "./App.css";
+import useUserStore from "./stores/user/index";
+
+const AuthenticatedApp = React.lazy(
+  () => import("./components/authenticated-app")
+);
+const UnauthenticatedApp = React.lazy(
+  () => import("./components/unauthenticated-app")
+);
 
 function App() {
-  const [count, setCount] = useState<number>(0);
+  const user = useUserStore((state) => state.user);
+  console.log("=== user data ===", user);
+
   return (
     <div className="grid place-items-center ">
       <h1>Vite React Typescript Tailwind starter</h1>
-      <p>Counter: {count}</p>
-      <button
-        className="p-4 bg-blue-400 hover:bg-blue-500 rounded-lg mt-6"
-        onClick={() => setCount((count) => count + 1)}
-      >
-        Increment
-      </button>
+      <Suspense fallback={<p>Loading ....</p>}>
+        {Boolean(user?.accessToken) ? (
+          <AuthenticatedApp />
+        ) : (
+          <UnauthenticatedApp />
+        )}
+      </Suspense>
     </div>
   );
 }
